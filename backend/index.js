@@ -6,25 +6,46 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
-
-// better remove this later for prod
 app.use(cors());
 
-app.get("/api/quote", async (req, res) => {
+const quotesCache = {};
+
+async function fetchAndCacheQuotes() {
   try {
-    const response = await fetch("https://zenquotes.io/api/today");
+    const response = await fetch("https://zenquotes.io/api/quotes");
     if (!response.ok) {
-      throw new Error("Failed to fetch quote");
+      throw new Error("Failed to fetch quotes");
     }
     const data = await response.json();
-    const quote = {
-      q: data[0].q,
-      a: data[0].a,
-    };
-    res.status(200).json(quote);
+    const quotes = data.map((quote) => ({ text: quote.q, author: quote.a }));
+
+    quotesCache.quotes = quotes;
+
+    console.log("Quotes fetched and cached");
+  } catch (error) {
+    console.error("Failed to fetch and cache quotes:", error);
+  }
+}
+
+fetchAndCacheQuotes();
+
+// Schedule fetchAndCacheQuotes to run every 3 hours
+setInterval(fetchAndCacheQuotes, 3 * 60 * 60 * 1000);
+
+app.get("/api/quotes", async (req, res) => {
+  try {
+    if (quotesCache.quotes) {
+      console.log("Quotes served from cache");
+      res.status(200).json({
+        message: "Quotes fetched successfully",
+        quotes: quotesCache.quotes,
+      });
+    } else {
+      throw new Error("No quotes in cache");
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to fetch quote" });
+    res.status(500).json({ error: "Failed to fetch quotes" });
   }
 });
 

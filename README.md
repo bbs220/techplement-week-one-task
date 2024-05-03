@@ -10,7 +10,7 @@
 
 ## 📝 Instuctions for local use
 - `npm install` for installing both frontend and backend packages at the same time
-- `npm run start` for running both both the frontend and backend from a single terminal
+- `npm run both` for running both the frontend and backend from a single terminal
 - `npm run server` just to run the backend
 - `cd frontend` and `npm run dev` for running just the frontend
 
