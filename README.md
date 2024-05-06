@@ -6,12 +6,14 @@
 
 ## 🔗 Site is live at ..
 
-## 💼 Stack used : MERN
+<!-- ## 💼 Stack used : MERN -->
 
 ## 📝 Instuctions for local use
-- `npm install` for installing both frontend and backend packages at the same time
+- Download or git-clone the repo from github
+- `npm install` for installing backend packages in root folder
+- `cd frontend` and `npm install` for installing the frontend packages in the frontend folder
 - `npm run both` for running both the frontend and backend from a single terminal
-- `npm run server` just to run the backend
+- `npm run server` for running just the backend
 - `cd frontend` and `npm run dev` for running just the frontend
 
 ## 🔖 Free API used
@@ -21,4 +23,7 @@
 - [Vite](https://vitejs.dev/)
 - [React Icons](https://react-icons.github.io/react-icons/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Daisy UI](https://daisyui.com/)
 - [Axios](https://axios-http.com/)
+- [Nodemon](https://nodemon.io/)
+- [Concurrently](https://github.com/open-cli-tools/concurrently)

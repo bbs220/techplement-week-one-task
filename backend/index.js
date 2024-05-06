@@ -8,6 +8,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.listen(PORT, () => {
+  console.log(`server listening at port ${PORT} 🚀`);
+});
+
 const quotesCache = {};
 
 async function fetchAndCacheQuotes() {
@@ -47,8 +51,4 @@ app.get("/api/quotes", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch quotes" });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`server listening at port ${PORT} 🚀`);
 });
