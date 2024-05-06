@@ -8,6 +8,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// change to this later for prod
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//     optionsSuccessStatus: 200,
+//     methods: ["GET"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
+
 app.listen(PORT, () => {
   console.log(`server listening at port ${PORT} 🚀`);
 });
@@ -38,11 +48,20 @@ setInterval(fetchAndCacheQuotes, 3 * 60 * 60 * 1000);
 
 app.get("/api/quotes", async (req, res) => {
   try {
-    if (quotesCache.quotes) {
+    const author = req.query.author;
+    let quotesToSend = quotesCache.quotes;
+
+    if (author) {
+      quotesToSend = quotesCache.quotes.filter((quote) =>
+        quote.author.toLowerCase().includes(author.toLowerCase())
+      );
+    }
+
+    if (quotesToSend) {
       console.log("Quotes served from cache");
       res.status(200).json({
         message: "Quotes fetched successfully",
-        quotes: quotesCache.quotes,
+        quotes: quotesToSend,
       });
     } else {
       throw new Error("No quotes in cache");

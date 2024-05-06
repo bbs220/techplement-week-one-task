@@ -32,7 +32,7 @@ const RandomQuotes = () => {
   return (
     <div>
       {isLoading ? (
-        <div className="w-full h-[500px] flex justify-center items-center">
+        <div className="relative w-full h-[500px] flex justify-center items-center">
           <div className="loading loading-spinner loading-lg"></div>
         </div>
       ) : (
@@ -43,7 +43,7 @@ const RandomQuotes = () => {
               {"\u201c"} {quote} {"\u201d"}
             </div>
             <div className="flex justify-center items-center">
-              <div className="label label-text text-base lg:text-2xl italic opacity-60">
+              <div className="label label-text text-base lg:text-2xl italic opacity-70">
                 <GoDash /> {author}
               </div>
             </div>

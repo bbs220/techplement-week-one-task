@@ -22,6 +22,7 @@
 ## 🛠️ Other libs/tools used 
 - [Vite](https://vitejs.dev/)
 - [React Icons](https://react-icons.github.io/react-icons/)
+- [React Hot Toast](https://react-hot-toast.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Daisy UI](https://daisyui.com/)
 - [Axios](https://axios-http.com/)
