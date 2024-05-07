@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
@@ -8,6 +9,8 @@ import quoteModel from "./models/quoteModel.js";
 import { insertQuotes } from "./database/insertQuotesIntoDB.js";
 
 const PORT = process.env.PORT || 5000;
+
+const __dirname = path.resolve();
 
 const app = express();
 
@@ -19,15 +22,26 @@ app.use(cors());
 //   cors({
 //     origin: "http://localhost:5173",
 //     optionsSuccessStatus: 200,
-//     methods: ["GET"],
 //     allowedHeaders: ["Content-Type", "application/json"],
 //   })
 // );
 
+// app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+// app.get("*", (req, res) => {
+  // res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+// });
+
 app.listen(PORT, async () => {
   await connectToDB();
   console.log(`Server listening at port ${PORT} 🚀`);
+  // runs immmediately
   await insertQuotes();
+
+  // runs after every 2 hours
+  setInterval(async () => {
+    await insertQuotes();
+  }, 2 * 60 * 60 * 1000);
 });
 
 app.get("/api/quotes", async (req, res) => {

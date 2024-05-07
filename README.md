@@ -28,5 +28,6 @@
 - [Axios](https://axios-http.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [Dotenv](https://www.npmjs.com/package/dotenv)
+- [Flaticon](https://www.flaticon.com/)
 - [Nodemon](https://nodemon.io/)
 - [Concurrently](https://github.com/open-cli-tools/concurrently)
