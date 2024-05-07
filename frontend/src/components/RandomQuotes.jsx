@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { GoDash } from "react-icons/go";
 import { IoDiceSharp } from "react-icons/io5";
-import axios from "axios";
 
 const RandomQuotes = () => {
   const [quote, setQuote] = useState("");
@@ -14,10 +14,14 @@ const RandomQuotes = () => {
     setIsLoading(true);
     try {
       const res = await axios.get("/api/quotes");
-      const randomIndex = Math.floor(Math.random() * res.data.quotes.length);
-      const selectedQuote = res.data.quotes[randomIndex];
-      setQuote(selectedQuote.text);
-      setAuthor(selectedQuote.author);
+
+      const randomIndex = Math.floor(Math.random() * res.data.length);
+
+      const selectedQuote = res.data[randomIndex];
+
+      setQuote(selectedQuote.q);
+
+      setAuthor(selectedQuote.a);
     } catch (error) {
       console.error("Failed to fetch quote:", error);
     } finally {
@@ -39,7 +43,7 @@ const RandomQuotes = () => {
         <div className="relative w-full h-[500px] flex justify-center items-center flex-col">
           <div className="text-center flex justify-center items-center flex-col">
             <div className="label text-2xl lg:text-4xl w-5/6">
-              {/* weird utf8 hack since proper double quotation marks not easily available */}
+              {/* weird hack for double quotation marks */}
               {"\u201c"} {quote} {"\u201d"}
             </div>
             <div className="flex justify-center items-center">
@@ -50,7 +54,7 @@ const RandomQuotes = () => {
           </div>
           <button
             className="btn absolute bottom-2 lg:bottom-6"
-            onClick={fetchQuote}
+            onClick={() => fetchQuote()}
           >
             Random Quote
             <IoDiceSharp className="text-2xl" />

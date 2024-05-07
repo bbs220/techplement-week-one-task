@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
 import { IoSearch } from "react-icons/io5";
 import { GoDash } from "react-icons/go";
 import { TiDelete } from "react-icons/ti";
@@ -7,9 +7,6 @@ import { toast } from "react-hot-toast";
 
 const SearchQuotes = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
-  // eslint-disable-next-line no-unused-vars
-  const [quotes, setQuotes] = useState([]);
 
   const [filteredQuotes, setFilteredQuotes] = useState([]);
 
@@ -29,16 +26,13 @@ const SearchQuotes = () => {
 
     try {
       const response = await axios.get(`/api/quotes?author=${searchTerm}`);
-      if (response.data.quotes.length === 0) {
+      if (response.data.length === 0) {
         toast.error("No author or quote found");
       } else {
-        setQuotes(response.data.quotes);
-
-        setFilteredQuotes(response.data.quotes);
+        setFilteredQuotes(response.data);
       }
     } catch (error) {
       console.error("Failed to fetch quotes:", error);
-
       toast.error("Failed to fetch quotes");
     }
   };
@@ -74,11 +68,12 @@ const SearchQuotes = () => {
             className="p-1 rounded-lg flex justify-center items-center flex-col"
           >
             <p className="label text-wrap text-center">
-              {"\u201c"} {quote.text} {"\u201d"}
+              {/* weird hack for double quotation marks */}
+              {"\u201c"} {quote.q} {"\u201d"}
             </p>
             <div className="flex justify-center items-center gap-x-4">
               <p className="label text-sm text-center italic opacity-70">
-                <GoDash /> {quote.author}
+                <GoDash /> {quote.a}
               </p>
               <button
                 className="btn btn-xs size-8 p-0"

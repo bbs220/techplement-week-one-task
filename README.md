@@ -6,7 +6,7 @@
 
 ## 🔗 Site is live at ..
 
-<!-- ## 💼 Stack used : MERN -->
+## 💼 Stack used : MERN
 
 ## 📝 Instuctions for local use
 - Download or git-clone the repo from github
@@ -26,5 +26,7 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Daisy UI](https://daisyui.com/)
 - [Axios](https://axios-http.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
 - [Nodemon](https://nodemon.io/)
 - [Concurrently](https://github.com/open-cli-tools/concurrently)
