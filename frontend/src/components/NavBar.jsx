@@ -1,5 +1,6 @@
 import ThemeToggle from "./ThemeToggle";
 
+// responsive navbar with the dark mode toggle
 const NavBar = () => {
   return (
     <div>

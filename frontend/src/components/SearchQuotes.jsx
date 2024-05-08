@@ -9,48 +9,55 @@ const SearchQuotes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredQuotes, setFilteredQuotes] = useState([]);
 
+  // for setting the search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  // for giving out the filtered quotes
   const handleDelete = (index) => {
     setFilteredQuotes(filteredQuotes.filter((_, i) => i !== index));
   };
 
+  // main section this is where it finds the quote from authors name
   const handleSearch = async () => {
+    // minimum value so not to do a empty search and get everything from the db
     if (searchTerm.length < 3) {
       toast.error("Minimum 3 characters needed for searching");
       return;
     }
 
+    // initial tries to get the data
     try {
       const response = await axios.get(
         `/api/quotes/search?author=${searchTerm}`
       );
-      // Check if the response data is an array
+      // checks if the response data is an array
       if (!Array.isArray(response.data)) {
         toast.error("Unexpected response format. Please try again.");
         return;
       }
+      // it nothing is found give a error
       if (response.data.length === 0) {
         toast.error("No author or quote found");
       } else {
+        // else just gives the found quote back
         setFilteredQuotes(response.data);
       }
     } catch (error) {
       console.error("Failed to fetch quotes:", error);
-      // Provide a more user-friendly error message if the error is due to network issues
+      // provides a more user-friendly error message if the error is due to network issues
       if (error.response) {
-        // The request was made and the server responded with a status code
+        // the request was made and the server responded with a status code
         // that falls out of the range of 2xx
         toast.error(
           `Error: ${error.response.status} ${error.response.statusText}`
         );
       } else if (error.request) {
-        // The request was made but no response was received
+        // the request was made but no response was received
         toast.error("No response received from the server. Please try again.");
       } else {
-        // Something happened in setting up the request that triggered an Error
+        // something happened in setting up the request that triggered an Error
         toast.error(
           "An error occurred while processing your request. Please try again."
         );

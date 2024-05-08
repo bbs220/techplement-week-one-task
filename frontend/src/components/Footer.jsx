@@ -1,5 +1,7 @@
 import { FaGithub } from "react-icons/fa6";
 
+// footer with link to repo and the zenquotes page for attribution
+
 const Footer = () => {
   return (
     <footer className="flex justify-between w-full h-24 items-center p-4 flex-col md:flex-row gap-y-8">

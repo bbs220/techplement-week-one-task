@@ -3,15 +3,18 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 
 const ThemeToggle = () => {
+  // if the page is previously visited then sets the theme from local storage
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
   );
 
+  // switches the theme
   const handleToggle = (e) => {
     if (e.target.checked) setTheme("light");
     else setTheme("dark");
   };
 
+  // runs immediately and stores the current theme of page
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");

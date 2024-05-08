@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 // app.use(cors());
 
-// Define your API routes here
+// random quotes route
 app.get("/api/quotes", async (req, res) => {
   try {
     const quotes = await quoteModel.find({});
@@ -28,6 +28,7 @@ app.get("/api/quotes", async (req, res) => {
   }
 });
 
+// search quotes route
 app.get("/api/quotes/search", async (req, res) => {
   try {
     const { author } = req.query;
@@ -37,7 +38,9 @@ app.get("/api/quotes/search", async (req, res) => {
         .json({ message: "Author name must be at least 3 characters" });
     }
 
-    // Perform a case-insensitive search for quotes by a partial match of the author's name
+  
+    // allowing to find quotes via author name 
+    // typed names do not need to be case sensitive
     const quotes = await quoteModel.find({
       a: { $regex: new RegExp(author, "i") },
     });
@@ -49,10 +52,9 @@ app.get("/api/quotes/search", async (req, res) => {
 });
 
 // always keep the static and wildcard last in route so it doesn't interfere with other routes
-// Serve static files from the React app
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-// Catch-all route should be the last route defined
+// for showing the build page from same origin
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
@@ -62,6 +64,7 @@ app.listen(PORT, async () => {
   console.log(`Server listening at port ${PORT} 🚀`);
   await insertQuotes();
 
+  // loop to keep fetching new quotes after few hours
   setInterval(async () => {
     await insertQuotes();
   }, 2 * 60 * 60 * 1000);

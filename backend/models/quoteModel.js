@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// schema for all the data the zenquotes api provides
 const quoteSchema = new mongoose.Schema(
   {
     q: {

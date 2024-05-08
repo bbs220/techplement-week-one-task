@@ -10,14 +10,17 @@ const RandomQuotes = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // runs after it is called
   const fetchQuote = async () => {
     setIsLoading(true);
     try {
       const res = await axios.get("/api/quotes");
-
+      // double checks the data and length just so no empty array
       if (res.data && res.data.length > 0) {
         const randomIndex = Math.floor(Math.random() * res.data.length);
+
         const selectedQuote = res.data[randomIndex];
+        // sets quotes
         setQuote(selectedQuote.q);
         setAuthor(selectedQuote.a);
       } else {
@@ -31,6 +34,7 @@ const RandomQuotes = () => {
     }
   };
 
+  // runs immediately
   useEffect(() => {
     fetchQuote();
   }, []);
