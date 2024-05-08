@@ -13,7 +13,7 @@ const Footer = () => {
       </aside>
       <nav className="flex justify-center items-center gap-x-8">
         <a
-          href="https://github.com/bbs220"
+          href="https://github.com/bbs220/techplement-week-one-task"
           className="link flex justify-center items-center scale-125 hover:text-slate-500"
         >
           <FaGithub className="text-xl md:hidden" />
