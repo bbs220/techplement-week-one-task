@@ -4,7 +4,7 @@
 
 ## 👋 Made by Buddhabhushan Sawant
 
-## 🔗 Site is live at ..
+## 🔗 Site is live at [here](https://quotes-6xpy.onrender.com/)
 
 ## 💼 Stack used : MERN
 
