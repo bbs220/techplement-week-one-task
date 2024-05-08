@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import cors from "cors";
+// import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -15,7 +15,7 @@ const __dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
 // Define your API routes here
 app.get("/api/quotes", async (req, res) => {
