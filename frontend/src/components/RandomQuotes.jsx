@@ -15,13 +15,15 @@ const RandomQuotes = () => {
     try {
       const res = await axios.get("/api/quotes");
 
-      const randomIndex = Math.floor(Math.random() * res.data.length);
-
-      const selectedQuote = res.data[randomIndex];
-
-      setQuote(selectedQuote.q);
-
-      setAuthor(selectedQuote.a);
+      if (res.data && res.data.length > 0) {
+        const randomIndex = Math.floor(Math.random() * res.data.length);
+        const selectedQuote = res.data[randomIndex];
+        setQuote(selectedQuote.q);
+        setAuthor(selectedQuote.a);
+      } else {
+        setQuote("");
+        setAuthor("");
+      }
     } catch (error) {
       console.error("Failed to fetch quote:", error);
     } finally {

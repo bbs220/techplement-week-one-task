@@ -17,48 +17,52 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// change to this later for prod
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",
-//     optionsSuccessStatus: 200,
-//     allowedHeaders: ["Content-Type", "application/json"],
-//   })
-// );
+// Define your API routes here
+app.get("/api/quotes", async (req, res) => {
+  try {
+    const quotes = await quoteModel.find({});
+    res.json(quotes);
+  } catch (error) {
+    console.error("Failed to fetch quotes:", error);
+    res.status(500).json({ message: "Failed to fetch quotes" });
+  }
+});
 
-// app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.get("/api/quotes/search", async (req, res) => {
+  try {
+    const { author } = req.query;
+    if (!author || author.length < 3) {
+      return res
+        .status(400)
+        .json({ message: "Author name must be at least 3 characters" });
+    }
 
-// app.get("*", (req, res) => {
-  // res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-// });
+    // Perform a case-insensitive search for quotes by a partial match of the author's name
+    const quotes = await quoteModel.find({
+      a: { $regex: new RegExp(author, "i") },
+    });
+    res.json(quotes);
+  } catch (error) {
+    console.error("Failed to search quotes:", error);
+    res.status(500).json({ message: "Failed to search quotes" });
+  }
+});
+
+// always keep the static and wildcard last in route so it doesn't interfere with other routes
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+// Catch-all route should be the last route defined
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 
 app.listen(PORT, async () => {
   await connectToDB();
   console.log(`Server listening at port ${PORT} 🚀`);
-  // runs immmediately
   await insertQuotes();
 
-  // runs after every 2 hours
   setInterval(async () => {
     await insertQuotes();
   }, 2 * 60 * 60 * 1000);
-});
-
-app.get("/api/quotes", async (req, res) => {
-  try {
-    // Check if the author query parameter is provided
-    if (req.query.author) {
-      // Filter quotes by author
-      const quotes = await quoteModel.find({
-        a: { $regex: req.query.author, $options: "i" },
-      });
-      res.status(200).json(quotes);
-    } else {
-      // If no author query parameter, return all quotes
-      const quotes = await quoteModel.find({});
-      res.status(200).json(quotes);
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching quotes" });
-  }
 });

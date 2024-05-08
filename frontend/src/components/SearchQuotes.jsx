@@ -7,7 +7,6 @@ import { toast } from "react-hot-toast";
 
 const SearchQuotes = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
   const [filteredQuotes, setFilteredQuotes] = useState([]);
 
   const handleSearchChange = (event) => {
@@ -25,7 +24,14 @@ const SearchQuotes = () => {
     }
 
     try {
-      const response = await axios.get(`/api/quotes?author=${searchTerm}`);
+      const response = await axios.get(
+        `/api/quotes/search?author=${searchTerm}`
+      );
+      // Check if the response data is an array
+      if (!Array.isArray(response.data)) {
+        toast.error("Unexpected response format. Please try again.");
+        return;
+      }
       if (response.data.length === 0) {
         toast.error("No author or quote found");
       } else {
@@ -33,7 +39,22 @@ const SearchQuotes = () => {
       }
     } catch (error) {
       console.error("Failed to fetch quotes:", error);
-      toast.error("Failed to fetch quotes");
+      // Provide a more user-friendly error message if the error is due to network issues
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        toast.error(
+          `Error: ${error.response.status} ${error.response.statusText}`
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        toast.error("No response received from the server. Please try again.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        toast.error(
+          "An error occurred while processing your request. Please try again."
+        );
+      }
     }
   };
 

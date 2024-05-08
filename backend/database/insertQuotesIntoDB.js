@@ -20,6 +20,11 @@ export const insertQuotes = async () => {
 };
 
 const insertNewQuotes = async (quotes) => {
+  if (!Array.isArray(quotes)) {
+    console.error("Expected an array of quotes, but received:", quotes);
+    return;
+  }
+
   quotes.forEach(async (quote) => {
     const newQuote = new quoteModel({
       q: quote.q,
