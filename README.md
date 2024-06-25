@@ -6,6 +6,8 @@
 
 ## 🔗 Site is live at [here](https://quotes-6xpy.onrender.com/)
 
+## ⚠️ Note: It make take up to 50 secs to load on the first visit since [Render](https://render.com/) does cold starts
+
 ## 💼 Stack used : MERN
 
 ## 📝 Instuctions for local use
