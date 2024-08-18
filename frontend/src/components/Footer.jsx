@@ -7,8 +7,8 @@ const Footer = () => {
     <footer className="flex justify-between w-full h-24 items-center p-4 flex-col md:flex-row gap-y-8">
       <aside className="items-center grid-flow-col">
         <div className="flex flex-col justify-center items-center text-center">
-          <p className="text-sm">Made by</p>
-          <p className="text-xl">Buddhabhushan Sawant</p>
+          <p className="text-sm">Developed by</p>
+          <p className="text-xl">bbs220</p>
         </div>
       </aside>
       <nav className="flex justify-center items-center gap-x-8">
